@@ -3,6 +3,12 @@ const mongoose = require("mongoose");
 require('dotenv').config();
 const app = express();
 
+const motoRoutes = require('./routes/motos');
+app.use('/api/motos', motoRoutes);
+
+const rideRoutes = require('./routes/ritten');
+app.use('/api/ritten', ritRoutes);
+
 app.use(express.json());
 
 app.get('/', (req, res) => {
