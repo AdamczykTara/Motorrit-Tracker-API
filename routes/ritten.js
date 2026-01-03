@@ -33,6 +33,24 @@ router.get('/search', async (req, res) => {
       }
     }
 
+    if (
+      req.query.minAfstand &&
+      req.query.maxAfstand &&
+      Number(req.query.minAfstand) > Number(req.query.maxAfstand)
+    ) {
+      return res.status(400).json({ error: 'minAfstand mag niet groter zijn dan maxAfstand.' });
+    }
+
+    if (
+      req.query.vanDatum &&
+      req.query.totDatum &&
+      new Date(req.query.vanDatum) > new Date(req.query.totDatum)
+    ) {
+      return res.status(400).json({
+        error: 'vanDatum moet voor totDatum liggen.'
+      });
+    }
+
     if (req.query.titel) {
       filter.titel = { $regex: req.query.titel, $options: 'i' };
     }
@@ -65,7 +83,14 @@ router.get('/search', async (req, res) => {
       filter.moto = req.query.moto;
     }
 
-    const ritten = await Rit.find(filter).skip(offset).limit(limit).populate('moto');
+    const sort = {};
+    const allowedSortFields = ['datum', 'afstand', 'titel'];
+
+    if (req.query.sortBy && allowedSortFields.includes(req.query.sortBy)) {
+      sort[req.query.sortBy] = req.query.order === 'desc' ? -1 : 1;
+    }
+
+    const ritten = await Rit.find(filter).sort(sort).skip(offset).limit(limit).populate('moto');
     
     res.json(ritten);
 

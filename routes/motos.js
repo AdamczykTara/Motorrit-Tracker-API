@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
       .limit(limit);
 
     res.json(motos);
-    
+
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -29,6 +29,22 @@ router.get('/search', async (req, res) => {
       if (req.query[field] && isNaN(req.query[field])) {
         return res.status(400).json({ error: `${field} moet een nummer zijn.` });
       }
+    }
+
+    if (
+      req.query.minJaar &&
+      req.query.maxJaar &&
+      Number(req.query.minJaar) > Number(req.query.maxJaar)
+    ) {
+      return res.status(400).json({ error: 'minJaar mag niet groter zijn dan maxJaar.' });
+    }
+
+    if (
+      req.query.minCc &&
+      req.query.maxCc &&
+      Number(req.query.minCc) > Number(req.query.maxCc)
+    ) {
+      return res.status(400).json({ error: 'minCc mag niet groter zijn dan maxCc.' });
     }
 
     if (req.query.merk) {
@@ -63,7 +79,14 @@ router.get('/search', async (req, res) => {
       }
     }
 
-    const motos = await Moto.find(filter).skip(offset).limit(limit);
+    const sort = {};
+    const allowedSortFields = ['jaar', 'cc', 'merk'];
+    
+    if (req.query.sortBy && allowedSortFields.includes(req.query.sortBy)) {
+      sort[req.query.sortBy] = req.query.order === 'desc' ? -1 : 1;
+    }
+
+    const motos = await Moto.find(filter).sort(sort).skip(offset).limit(limit);
     
     res.json(motos);
 
