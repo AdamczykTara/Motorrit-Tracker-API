@@ -1,23 +1,23 @@
 const express = require("express");
 const mongoose = require("mongoose");
 require('dotenv').config();
+
 const app = express();
+app.use(express.json());
 
 const motoRoutes = require('./routes/motos');
 app.use('/api/motos', motoRoutes);
 
-const rideRoutes = require('./routes/ritten');
+const ritRoutes = require('./routes/ritten');
 app.use('/api/ritten', ritRoutes);
 
-app.use(express.json());
-
 app.get('/', (req, res) => {
-  res.send('Hello World')
+  res.send('Motorrit tracker API is running.')
 })
 
-app.listen(3000, () => {
-  console.log('Server is running on http://localhost:3000')
-})
-
-mongoose.connect('mongodb://127.0.0.1:27017/test')
-  .then(() => console.log('Connected!'));
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log('MongoDB connected');
+    app.listen(3000, () => console.log('Server running on port 3000.'));
+  })
+  .catch(err => console.error(err));
