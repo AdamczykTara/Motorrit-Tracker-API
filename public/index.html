@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>Motorritten API</title>
+</head>
+
+<body>
+
+  <h1>Motorritten API</h1>
+
+  <p>
+    Een database-driven API voor het beheer van motorfietsen en motorritten met behulp van Node.js, Express en MongoDB. 
+  </p>
+
+  <h2>URL</h2>
+  <p><code>http://localhost:3000</code></p>
+
+  <hr>
+
+  <h2>Motos</h2>
+
+  <h3>Endpoints</h3>
+  <ul>
+    <li>
+      <code>GET /api/motos</code>  
+      <br>Haalt alle motos op.
+      <br>Query parameters: <code>limit</code>, <code>offset</code>
+    </li>
+    <li>
+      <code>GET /api/motos/search</code>  
+      <br>Zoekt motos op basis van meerdere criteria.
+      <br>Query parameters:
+      <ul>
+        <li><code>merk</code></li>
+        <li><code>model</code></li>
+        <li><code>minJaar</code>, <code>maxJaar</code></li>
+        <li><code>minCc</code>, <code>maxCc</code></li>
+        <li><code>sortBy</code> (jaar, cc, merk)</li>
+        <li><code>order</code> (asc, desc)</li>
+        <li><code>limit</code>, <code>offset</code></li>
+      </ul>
+    </li>
+    <li><code>GET /api/motos/:id</code> – Haalt 1 moto op</li>
+    <li><code>POST /api/motos</code> – Voegt een nieuwe moto toe</li>
+    <li><code>PUT /api/motos/:id</code> – Past een moto aan</li>
+    <li><code>DELETE /api/motos/:id</code> – Verwijderd een moto</li>
+  </ul>
+
+  <h3>Moto schema</h3>
+  <pre><code>{
+  "merk": "Suzuki",
+  "model": "GSX-S125",
+  "jaar": 2023,
+  "cc": 125
+}</code></pre>
+
+  <h3>Validatieregels Moto</h3>
+  <ul>
+    <li>merk: verplicht, string</li>
+    <li>model: verplicht, string</li>
+    <li>jaar: verplicht, nummer</li>
+    <li>cc: verplicht, nummer</li>
+  </ul>
+
+  <hr>
+
+  <h2>Ritten</h2>
+
+  <h3>Endpoints</h3>
+  <ul>
+    <li>
+      <code>GET /api/ritten</code>  
+      <br>Haalt alle ritten op (inclusief gekoppelde moto).
+      <br>Query parameters: <code>limit</code>, <code>offset</code>
+    </li>
+    <li>
+      <code>GET /api/ritten/search</code>  
+      <br>Zoekt ritten op basis van meerdere criteria.
+      <br>Query parameters:
+      <ul>
+        <li><code>titel</code></li>
+        <li><code>minAfstand</code>, <code>maxAfstand</code></li>
+        <li><code>vanDatum</code>, <code>totDatum</code></li>
+        <li><code>moto</code> (Moto ID)</li>
+        <li><code>sortBy</code> (datum, afstand, titel)</li>
+        <li><code>order</code> (asc, desc)</li>
+        <li><code>limit</code>, <code>offset</code></li>
+      </ul>
+    </li>
+    <li><code>GET /api/ritten/:id</code> – Haalt 1 rit op</li>
+    <li><code>POST /api/ritten</code> – Voegt een nieuwe rit toe</li>
+    <li><code>PUT /api/ritten/:id</code> – Past een rit aan</li>
+    <li><code>DELETE /api/ritten/:id</code> – Verwijderd een rit</li>
+  </ul>
+
+  <h3>Rit schema</h3>
+  <pre><code>{
+  "titel": "Zondagrit Ardennen",
+  "afstand": 180,
+  "datum": "2024-06-15",
+  "moto": "ObjectId"
+}</code></pre>
+
+  <h3>Validatieregels Rit</h3>
+  <ul>
+    <li>titel: verplicht, string</li>
+    <li>afstand: verplicht, nummer</li>
+    <li>datum: verplicht, geldige datum</li>
+    <li>moto: verplicht, moet bestaan</li>
+    <li>minAfstand mag niet groter zijn dan maxAfstand</li>
+    <li>vanDatum moet voor totDatum liggen</li>
+  </ul>
+
+  <hr>
+
+  <h2>Foutafhandeling</h2>
+  <ul>
+    <li><code>400</code> – Ongeldige input of validatiefouten</li>
+    <li><code>404</code> – Resource niet gevonden</li>
+    <li><code>500</code> – Interne serverfout</li>
+  </ul>
+
+  <p>
+    Alle endpoints gebruiken correcte HTTP-verbs en retourneren JSON.
+  </p>
+
+</body>
+</html>
