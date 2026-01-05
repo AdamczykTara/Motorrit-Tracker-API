@@ -44,7 +44,7 @@
     <li><code>GET /api/motos/:id</code> – Haalt 1 moto op</li>
     <li><code>POST /api/motos</code> – Voegt een nieuwe moto toe</li>
     <li><code>PUT /api/motos/:id</code> – Past een moto aan</li>
-    <li><code>DELETE /api/motos/:id</code> – Verwijderd een moto</li>
+    <li><code>DELETE /api/motos/:id</code> – Verwijdert een moto</li>
   </ul>
 
   <h3>Moto schema</h3>
@@ -59,8 +59,10 @@
   <ul>
     <li>merk: verplicht, string</li>
     <li>model: verplicht, string</li>
-    <li>jaar: verplicht, nummer</li>
-    <li>cc: verplicht, nummer</li>
+    <li>jaar: verplicht, nummer, minimum 1900</li>
+    <li>cc: verplicht, nummer, minimum 50</li>
+    <li>minJaar mag niet groter zijn dan maxJaar</li>
+    <li>minCC mag niet groter zijn dan maxCC</li>
   </ul>
 
   <hr>
@@ -91,7 +93,7 @@
     <li><code>GET /api/ritten/:id</code> – Haalt 1 rit op</li>
     <li><code>POST /api/ritten</code> – Voegt een nieuwe rit toe</li>
     <li><code>PUT /api/ritten/:id</code> – Past een rit aan</li>
-    <li><code>DELETE /api/ritten/:id</code> – Verwijderd een rit</li>
+    <li><code>DELETE /api/ritten/:id</code> – Verwijdert een rit</li>
   </ul>
 
   <h3>Rit schema</h3>
@@ -105,7 +107,7 @@
   <h3>Validatieregels Rit</h3>
   <ul>
     <li>titel: verplicht, string</li>
-    <li>afstand: verplicht, nummer</li>
+    <li>afstand: verplicht, nummer, minimum 1</li>
     <li>datum: verplicht, geldige datum</li>
     <li>moto: verplicht, moet bestaan</li>
     <li>minAfstand mag niet groter zijn dan maxAfstand</li>
