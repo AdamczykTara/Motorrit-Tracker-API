@@ -1,5 +1,5 @@
 # Motorrit Tracker API
-Dit project is een database-driven REST API, gemaakt met Node.js, Express en MongoDB, voor het beheren van motos en motorritten.<br/>
+Dit project is een database-driven API, gemaakt met Node.js, Express en MongoDB, voor het beheren van motos en motorritten.<br/>
 De API laat toe om motos en ritten aan te maken, op te vragen, te wijzigen en te verwijderen, met ondersteuning voor zoeken, sorteren, paginatie en basisvalidatie.<br/>
 
 ## Features
@@ -54,12 +54,9 @@ npm install<br/>
 cp .env.example .env<br/>
 
 #### .env
-Pas het .env-bestand aan met je MongoDB connectiestring.<br/>
+Pas .env aan met je MongoDB connectiestring.<br/>
 Voorbeeld:<br/>
 MONGO_URI=mongodb://127.0.0.1:27017/motorrit_tracker
-
-#### CLI
-npm run dev
 
 ## Gebruik
 Voor gebruik moet je volgende zaken doen:
@@ -67,8 +64,7 @@ Voor gebruik moet je volgende zaken doen:
 - CLI: npm run dev
 - HTTP-requests versturen via Thunder Client
 
-De API draait standaard op:<br/>
-http://localhost:3000<br/>
+Bezoek de API op http://localhost:3000<br/>
 
 ### Beschikbare endpoints
 - /api/motos
@@ -77,7 +73,6 @@ http://localhost:3000<br/>
 - /api/ritten
 - /api/ritten/search
 - /api/ritten/:id
-
 
 De rootpagina (`/`) bevat een HTML-documentatiepagina met een overzicht van alle endpoints en validatieregels.
 
